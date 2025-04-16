@@ -1,9 +1,13 @@
 package com.kukhar.uklon.service.data;
 
-import java.io.File;
+import com.kukhar.uklon.model.CsvEntity;
 
-public interface EntityDataManager {
-    void generateEntitiesToCsv(File file);
+import java.util.List;
 
-    void readEntitiesFromCsvToDb(File file);
+public interface EntityDataManager<E extends CsvEntity> {
+    List<E> generateRandomEntities();
+
+    void readEntitiesFromLines(List<String> lines);
+
+    String getEntityHeaders();
 }

@@ -6,23 +6,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Passenger implements IUser {
+public class Passenger extends CsvEntity implements IUser {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Integer id;
 
     private String email;
     private String phoneNumber;

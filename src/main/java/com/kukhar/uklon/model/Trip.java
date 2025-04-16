@@ -20,11 +20,11 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Trip {
+public class Trip extends CsvEntity {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Integer id;
 
     @ManyToOne
     private Driver driver;
@@ -40,8 +40,16 @@ public class Trip {
 
     @JsonIgnore
     public static String getHeaders() {
-        return "id,driver,passenger,destination,status," + Location.getHeaders();
+        return "id,driver,passenger,status," + Location.getHeaders();
     }
 
+    @Override
+    public String toCsv() {
+        return id + "," +
+                (driver != null ? driver.getId() : "") + "," +
+                (passenger != null ? passenger.getId() : "") + "," +
+                status.name() + "," +
+                destination.toCsv();
+    }
 }
 

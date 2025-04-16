@@ -9,23 +9,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
+@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Driver implements IUser {
+public class Driver extends CsvEntity implements IUser {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Integer id;
 
     private String email;
     private String phoneNumber;
@@ -42,11 +45,18 @@ public class Driver implements IUser {
 
     @JsonIgnore
     public static String getHeaders() {
-        return "id,email,phoneNumber,rating,createdAt,location," + Location.getHeaders();
+        return "id,email,phoneNumber,rating,createdAt,vehicleId," + Location.getHeaders();
     }
 
+    @Override
     public String toCsv() {
-        return email + "," + phoneNumber + "," + rating + "," + vehicle.toCsv() + "," + location.toCsv();
+        return id + "," +
+                email + "," +
+                phoneNumber + "," +
+                rating + "," +
+                createdAt + "," +
+                (vehicle != null ? vehicle.getId() : "") + "," +
+                location.toCsv();
     }
 }
 

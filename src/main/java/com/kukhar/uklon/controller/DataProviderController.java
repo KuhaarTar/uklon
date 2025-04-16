@@ -1,6 +1,6 @@
 package com.kukhar.uklon.controller;
 
-import com.kukhar.uklon.service.ApplicationDataProviderService;
+import com.kukhar.uklon.service.DataProviderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/data")
-public class ApplicationDataProviderController {
+public class DataProviderController {
 
-    private final ApplicationDataProviderService dataGenerator;
+    private final DataProviderService dataGenerator;
 
     @PostMapping("/write")
     public ResponseEntity<Void> generateDataAndWriteToDb() {

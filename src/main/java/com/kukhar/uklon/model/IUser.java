@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public interface IUser {
-    UUID getId();
+    Integer getId();
 
     String getEmail();
 

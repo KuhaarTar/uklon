@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,13 +15,14 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Vehicle {
+public class Vehicle extends CsvEntity {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Integer id;
 
     private String model;
     private int capacity;
@@ -28,12 +30,14 @@ public class Vehicle {
     private String registrationPlates;
 
     @JsonIgnore
-    private static String getHeaders() {
+    public static String getHeaders() {
         return "id,model,capacity,color,registrationPlates";
     }
 
+    @Override
     public String toCsv() {
-        return model + "," + capacity + "," + color + "," + registrationPlates;
+        return id + "," + model + "," + capacity + "," + color + "," + registrationPlates;
     }
+
 }
 
