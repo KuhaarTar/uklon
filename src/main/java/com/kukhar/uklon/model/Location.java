@@ -13,8 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Location extends CsvEntity {
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private double altitude;
     private double accuracy;
 

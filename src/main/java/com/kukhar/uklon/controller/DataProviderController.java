@@ -1,5 +1,6 @@
 package com.kukhar.uklon.controller;
 
+import com.kukhar.uklon.common.ApiRoutes;
 import com.kukhar.uklon.service.DataProviderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/data")
+@RequestMapping(ApiRoutes.DataProvider.BASE)
 public class DataProviderController {
 
     private final DataProviderService dataGenerator;
 
-    @PostMapping("/write")
+    @PostMapping(ApiRoutes.DataProvider.WRITE)
     public ResponseEntity<Void> generateDataAndWriteToDb() {
         dataGenerator.generateDataForEntities();
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/read")
+    @PostMapping(ApiRoutes.DataProvider.READ)
     public ResponseEntity<Void> readDataToDb() {
         dataGenerator.readDataToDb();
         return ResponseEntity.ok().build();

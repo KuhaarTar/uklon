@@ -2,31 +2,31 @@ package com.kukhar.uklon.service.data;
 
 import com.kukhar.uklon.model.Vehicle;
 import com.kukhar.uklon.repository.VehicleRepository;
+import com.kukhar.uklon.service.parser.VehicleParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.datafaker.Faker;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import static com.kukhar.uklon.common.ApplicationConstants.ROW_COUNT;
 
 @Slf4j
 @Order(1)
 @Component
 @RequiredArgsConstructor
-public class VehicleDataManager implements EntityDataManager<Vehicle> {
+public class VehicleDataManager extends EntityDataManager<Vehicle> {
 
-    private final Faker faker;
     private final Random random;
     private final VehicleRepository vehicleRepository;
 
     @Override
     public List<Vehicle> generateRandomEntities() {
         List<Vehicle> vehicles = new LinkedList<>();
-        for (int i = 1; i < 300; i++) {
+        for (int i = 1; i < ROW_COUNT; i++) {
             vehicles.add(getRandomData(i));
         }
         return vehicles;
@@ -37,7 +37,7 @@ public class VehicleDataManager implements EntityDataManager<Vehicle> {
         List<Vehicle> vehicles = new LinkedList<>();
         for (String line : lines) {
             try {
-                vehicles.add(parseVehicle(line));
+                vehicles.add(VehicleParser.parseVehicle(line));
             } catch (Exception e) {
                 System.out.println("Error parsing vehicle: " + line + " -> " + e.getMessage());
             }
@@ -53,23 +53,11 @@ public class VehicleDataManager implements EntityDataManager<Vehicle> {
     }
 
     public Vehicle getRandomData(Integer id) {
-        return new Vehicle(id   ,
+        return new Vehicle(id,
                 faker.vehicle().model(),
                 random.nextInt(),
                 faker.color().name(),
                 faker.ancient().titan() + " " + faker.number().digits(4) + "-" + faker.number().digits(2) + "-" + faker.number().digits(2)
-        );
-    }
-
-    private Vehicle parseVehicle(String line) {
-        String[] fields = line.split(",");
-        log.info(Arrays.toString(fields));
-        return new Vehicle(
-                Integer.valueOf(fields[0]),
-                fields[1],
-                Integer.parseInt(fields[2]),
-                fields[3],
-                fields[4]
         );
     }
 
